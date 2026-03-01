@@ -1,23 +1,17 @@
+import { useEffect } from "react";
 import Hero from "../components/organisms/Hero";
 import MovieSection from "../components/organisms/MovieSection";
 import ReviewSection from "../components/organisms/ReviewSection";
-import { useState, useEffect } from "react";
-import { getMovies } from "../services/api/movieApi";
+import useMovieStore from "../store/movieStore";
 
 const Dashboard = () => {
-  const [movies, setMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { movies, isLoading, fetchMovies } = useMovieStore();
 
   useEffect(() => {
-    const fetchMovies = async () => {
-      setIsLoading(true);
-      const dataFromAPI = await getMovies();
-      setMovies(dataFromAPI);
-      setIsLoading(false);
-    };
-
-    fetchMovies();
-  }, []);
+    if (movies.length === 0) {
+      fetchMovies();
+    }
+  }, [fetchMovies, movies.length]);
 
   if (isLoading) {
     return (

@@ -2,8 +2,19 @@ import { IoMdPlay } from "react-icons/io";
 import { IoMdAdd } from "react-icons/io";
 import { IoMdCheckmark } from "react-icons/io";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import useMovieStore from "../../store/movieStore";
 
-const HoverMovieCard = ({ title, backdrop, genre, duration, ageRating }) => {
+const HoverMovieCard = ({
+  id,
+  title,
+  backdrop,
+  genre,
+  duration,
+  ageRating,
+  isMyList,
+}) => {
+  const { toggleMyList } = useMovieStore();
+
   return (
     <div className='bg-primary rounded-2xl w-[350px] shadow-hover-card flex flex-col overflow-hidden'>
       <img
@@ -19,8 +30,14 @@ const HoverMovieCard = ({ title, backdrop, genre, duration, ageRating }) => {
               <IoMdPlay className='text-primary lg:text-2xl' />
             </button>
 
-            <button className='bg-primary border p-2 rounded-full cursor-pointer transition-all duration-200 active:scale-95'>
-              <IoMdAdd className='lg:text-2xl' />
+            <button
+              onClick={() => toggleMyList(id)}
+              className='bg-primary border p-2 rounded-full cursor-pointer transition-all duration-200 active:scale-95'>
+              {isMyList ? (
+                <IoMdCheckmark className='lg:text-2xl' />
+              ) : (
+                <IoMdAdd className='lg:text-2xl' />
+              )}
             </button>
           </div>
 
