@@ -1,17 +1,10 @@
-import { useEffect } from "react";
 import Hero from "../components/organisms/Hero";
 import MovieSection from "../components/organisms/MovieSection";
 import ReviewSection from "../components/organisms/ReviewSection";
-import useMovieStore from "../store/movieStore";
+import useFetchMovies from "../hooks/useFetchMovies";
 
 const Dashboard = () => {
-  const { movies, isLoading, fetchMovies } = useMovieStore();
-
-  useEffect(() => {
-    if (movies.length === 0) {
-      fetchMovies();
-    }
-  }, [fetchMovies, movies.length]);
+  const { movies, isLoading } = useFetchMovies();
 
   if (isLoading) {
     return (

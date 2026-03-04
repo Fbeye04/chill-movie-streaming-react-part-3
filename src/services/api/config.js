@@ -7,4 +7,14 @@ const apiClient = axios.create({
   },
 });
 
+apiClient.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    console.error("[axios interceptor] Error terdeteksi:", error.message);
+    return Promise.reject(error);
+  },
+);
+
 export default apiClient;

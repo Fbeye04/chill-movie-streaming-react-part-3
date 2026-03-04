@@ -1,44 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import useReviewStore from "../../store/reviewStore";
 import { LuMessageSquarePlus } from "react-icons/lu";
 import ReviewCard from "../molecules/ReviewCard";
 import ReviewModal from "../molecules/ReviewModal";
 
 const ReviewSection = () => {
-  const [reviews, setReviews] = useState(() => {
-    const savedReviews = localStorage.getItem("movie_reviews");
-    return savedReviews ? JSON.parse(savedReviews) : [];
-  });
+  const { reviews, addReview, deleteReview, updateItem } = useReviewStore();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reviewToEdit, setReviewToEdit] = useState(null);
 
-  useEffect(() => {
-    localStorage.setItem("movie_reviews", JSON.stringify(reviews));
-  }, [reviews]);
-
-  const handleAddReview = (newReview) => {
-    setReviews((prevReviews) => [...prevReviews, newReview]);
-  };
-
-  const handleDeleteReview = (idToDelete) => {
-    const remainingReviews = reviews.filter(
-      (prevReviews) => prevReviews.id !== idToDelete,
-    );
-
-    setReviews(remainingReviews);
-  };
-
   const handleEditReview = (editData) => {
     setReviewToEdit(editData);
     setIsModalOpen(true);
-  };
-
-  const handleUpdateItem = (updatedReview) => {
-    const newReviews = reviews.map((prevReviews) =>
-      prevReviews.id === updatedReview.id ? updatedReview : prevReviews,
-    );
-
-    setReviews(newReviews);
   };
 
   const handleCloseModal = () => {
@@ -70,8 +44,8 @@ const ReviewSection = () => {
         <ReviewModal
           editData={reviewToEdit}
           onClose={handleCloseModal}
-          onAddReview={handleAddReview}
-          onUpdate={handleUpdateItem}
+          onAddReview={addReview}
+          onUpdate={updateItem}
         />
       )}
 
@@ -100,7 +74,7 @@ const ReviewSection = () => {
               title={items.title}
               rating={items.rating}
               review={items.review}
-              onDelete={handleDeleteReview}
+              onDelete={deleteReview}
               onEdit={handleEditReview}
             />
           ))}

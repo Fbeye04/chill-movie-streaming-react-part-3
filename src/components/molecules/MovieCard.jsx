@@ -32,7 +32,7 @@ const MovieCard = ({
 
   return (
     <div
-      className={`relative text-white cursor-pointer shrink-0 group z-10 hover:z-50 ${cardStyle[variant]}`}>
+      className={`relative text-white shrink-0 group z-10 hover:z-50 ${cardStyle[variant]}`}>
       <div className='w-full h-full relative'>
         <img
           src={displayImage}

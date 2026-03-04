@@ -11,6 +11,7 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    localStorage.setItem("isLoggedIn", "true");
     navigate("/home");
   };
 
