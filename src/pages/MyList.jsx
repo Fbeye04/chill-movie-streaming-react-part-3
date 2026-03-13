@@ -2,7 +2,7 @@ import { IoMdFilm } from "react-icons/io";
 import { Link } from "react-router-dom";
 import useFetchMovies from "../hooks/useFetchMovies";
 import MovieCard from "../components/molecules/MovieCard";
-import SkeletonLoader from "../components/SkeletonLoader";
+import SkeletonLoader from "../components/molecules/SkeletonLoader";
 
 const MyList = () => {
   const { movies, isLoading } = useFetchMovies();
