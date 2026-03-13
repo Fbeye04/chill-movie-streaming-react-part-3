@@ -26,7 +26,7 @@ const MovieCard = ({
 
   const cardStyle = {
     portrait: "w-[150px] md:w-[200px] lg:w-[234px] aspect-[2/3]",
-    landscape: " w-[309px] lg:w-[302px] aspect-video",
+    landscape: "w-[309px] lg:w-[302px] aspect-video",
     grid: "w-full aspect-[2/3]",
   };
 

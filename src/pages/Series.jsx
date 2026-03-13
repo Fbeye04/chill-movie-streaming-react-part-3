@@ -1,24 +1,10 @@
 import Hero from "../components/organisms/Hero";
 import MovieSection from "../components/organisms/MovieSection";
-import { useEffect } from "react";
-import useMovieStore from "../store/movieStore";
+import useFetchMovies from "../hooks/useFetchMovies";
+import SkeletonLoader from "../components/molecules/SkeletonLoader";
 
 const Series = () => {
-  const { movies, isLoading, fetchMovies } = useMovieStore();
-
-  useEffect(() => {
-    if (movies.length === 0) {
-      fetchMovies();
-    }
-  }, [fetchMovies, movies.length]);
-
-  if (isLoading) {
-    return (
-      <div className='text-white text-center my-20 text-lg lg:text-2xl'>
-        Memuat Film...
-      </div>
-    );
-  }
+  const { movies, isLoading } = useFetchMovies();
 
   const onlySeries = movies.filter((item) => item.type === "Series");
   const heroData = movies.find((movie) => movie.id === 31);
@@ -38,26 +24,37 @@ const Series = () => {
         />
       )}
 
-      <MovieSection
-        section='Melanjutkan Tonton Series'
-        dataMovies={continueWatching}
-        variant='landscape'
-      />
-      <MovieSection
-        section='Top Rating Series Hari Ini'
-        dataMovies={topRating}
-        variant='portrait'
-      />
-      <MovieSection
-        section='Series Trending'
-        dataMovies={trending}
-        variant='portrait'
-      />
-      <MovieSection
-        section='Rilis Baru'
-        dataMovies={newReleases}
-        variant='portrait'
-      />
+      {isLoading ? (
+        <>
+          <SkeletonLoader variant='landscape' />
+          <SkeletonLoader variant='portrait' />
+          <SkeletonLoader variant='portrait' />
+          <SkeletonLoader variant='portrait' />
+        </>
+      ) : (
+        <>
+          <MovieSection
+            section='Melanjutkan Tonton Series'
+            dataMovies={continueWatching}
+            variant='landscape'
+          />
+          <MovieSection
+            section='Top Rating Series Hari Ini'
+            dataMovies={topRating}
+            variant='portrait'
+          />
+          <MovieSection
+            section='Series Trending'
+            dataMovies={trending}
+            variant='portrait'
+          />
+          <MovieSection
+            section='Rilis Baru'
+            dataMovies={newReleases}
+            variant='portrait'
+          />
+        </>
+      )}
     </main>
   );
 };
